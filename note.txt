@@ -1,0 +1,66 @@
+- npm install react-router-dom  
+
+-react Router is library manage Navigate
+
+-npx shadcn@latest add field for install field 
+
+-npx shadcn@latest add select 
+
+-npm i @tanstack/react-form
+
+-npm i date-fns
+
+-search online datafns
+
+--userQuery for red data 
+
+-- useMutation for create/update/delete
+
+
+--mutationFn:Create Product from service
+
+--npx shadcn@latest add sonner
+
+-npm install zod
+
+=>(
+    form,dialog,
+)
+
+- z for validate form input field
+
+--condition ? value1 : value2(Ternary Operator)
+
+--({jdjfjfj distracturing operator})
+
+---Spread Operator ...
+
+--use debounce  for search
+
++ branch category (
+
+    1.list [
+        . column
+        . form 
+        . create service category then get  data API from hook by use 
+        (const  {data,isLoading}= useCategory,useCreateCategory... )
+        . userQuery
+        . hook
+        = use mutation is method tanstack for post , put , delete
+        
+
+    ]
+
+    2. create [
+        . form (have dialog that parent form)
+        . convert modal popup 
+        . call API
+    ]
+    
+)
+- userQuery for get of getdata api 
+- useMutation for method post,put,delete 
+
+-use debounce for install as search  npm i use-debounce
+
+- block so file upload for use file upload image

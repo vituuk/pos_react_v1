@@ -1,0 +1,1 @@
+-  useQuery use only getMethod from service

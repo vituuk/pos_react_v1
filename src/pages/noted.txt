@@ -1,0 +1,20 @@
+ 
+ 
+1 { const {data,isLoading}= useCategory();
+  if (isLoading){
+    return <div className="flex  items-center justify-center">
+      <Spinner/>
+      </div>
+  }
+
+  if use if(isLoading){...} need to use . (
+<DataTable columns={columns} data={data.data ?? []} />
+
+  )
+
+  but not use with isLoading need to use ? (
+    <DataTable columns={columns} data={data?.data ?? []} />
+  )
+
+this point ?? [] optional
+ }1
