@@ -6,13 +6,7 @@ import { toast } from "sonner"
 import * as z from "zod"
 
 import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
- 
-  CardFooter,
- 
-} from "@/components/ui/card"
+
 import {
   Field,
  
@@ -40,12 +34,10 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
  
  
-import { Label } from "@/components/ui/label"
-import { tr } from "zod/v4/locales"
+
 import { createdCategory, updateCategories } from "@/hooks/test-category"
 import type { Category } from "@/types/category"
 import { useEffect } from "react"

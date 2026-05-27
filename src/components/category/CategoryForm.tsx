@@ -17,7 +17,6 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -25,7 +24,7 @@ import {
 import { useCreateCategory, useUpdateCategory } from "@/hooks/use-category"
 import { toast } from "sonner"
 import type { Category } from "@/types/category"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 
 const categorySchema = z.object({
   name: z

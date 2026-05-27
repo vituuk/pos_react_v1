@@ -31,7 +31,7 @@ import { useCategoryList } from "@/hooks/use-category";
 import { useCreateProduct, useUpdateProduct ,useUploadProductImage,useDeleteProductImage} from "@/hooks/use-product";
 import { useEffect, useState,useRef } from "react";
 import { toast } from "sonner";
-import type { Product, IProductImage } from "@/types/product";
+import type { Product, IProductImage, ProductPayload } from "@/types/product";
 import type { Category } from "@/types/category";
 
 import { Trash2, Upload } from "lucide-react";
@@ -39,17 +39,16 @@ import { cn } from "@/lib/utils";
 
 
 
-// export type ProductSchema=z.infer<typeof productSchema>;
 export const productSchema = z.object({
   name: z.string().min(1, "Product name is required"),
-  description: z.string().default("").catch(""),
-  color: z.string().default("").catch(""),
+  description: z.string().catch(""),
+  color: z.string().catch(""),
   price: z.number().min(0, "Price must be 0 or more"),
   qty: z.number().int().min(0, "Quantity must be 0 or more"),
   categoryId: z
-    .union([z.number().min(1, "Category is required"), z.null(), z.undefined()])
-    .refine((value) => value !== null, "Category is required"),
-  is_active: z.boolean().default(true).catch(true),
+    .union([z.number().min(1, "Category is required"), z.undefined()])
+    .refine((value) => value !== undefined, "Category is required"),
+  is_active: z.boolean().catch(true),
 });
 
 interface Props {
@@ -93,7 +92,7 @@ const ProductForm = ({ open, setOpen, product }: Props) => {
       setIsLoading(true);
       if (product) {
         updateProductMutate(
-          { id: product.id, request: value },
+          { id: product.id, request: value as ProductPayload },
           {
 
             onSuccess: (res) => {
@@ -123,7 +122,7 @@ const ProductForm = ({ open, setOpen, product }: Props) => {
           },
         );
       } else {
-        createProductMutate(value, {
+        createProductMutate(value as ProductPayload, {
           onSuccess: (res) => {
             // toast.success("Product created successfully");
               if (res.data.id) {
@@ -653,8 +652,8 @@ const ProductForm = ({ open, setOpen, product }: Props) => {
               <DialogClose asChild>
                 <Button variant="outline">Cancel</Button>
               </DialogClose>
-              <Button className="bg-blue-500" type="submit" form="product-form">
-                Save
+              <Button className="bg-blue-500" type="submit" form="product-form" disabled={isLoading}>
+                {isLoading ? "Saving..." : "Save"}
               </Button>
             </Field>
           </DialogFooter>

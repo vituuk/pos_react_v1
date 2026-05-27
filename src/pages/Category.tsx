@@ -13,7 +13,7 @@ import { useDebounce } from 'use-debounce';
 import { getAccessToken } from "@/utils/tokenStorage";
 import { useNavigate } from "react-router-dom";
 
-const Category = () => {
+const CategoryPage = () => {
   const navigate = useNavigate();
   const [open,setOpen]=useState(false);
   const {mutate: deleteCategoryMutate} = useDeleteCategory();
@@ -80,4 +80,4 @@ const Category = () => {
   )
 }
 
-export default Category
+export default CategoryPage

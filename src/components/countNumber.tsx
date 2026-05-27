@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from './ui/button';
 const countNumber = () => {
     const [count,setCount]=useState(0);

@@ -1,7 +1,6 @@
 "use client"
 
-import type { ColumnDef } from "@tanstack/react-table";
-import type { TestCategory } from "@/types/test-category";
+
 
  
 import { MoreHorizontal, PencilIcon, TrashIcon } from "lucide-react"
@@ -11,13 +10,12 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { format } from "date-fns/format";
-import { Edit } from "lucide-react";
-import { Delete } from "lucide-react";
+
+import type { ColumnDef } from "@tanstack/react-table";
 import type { Category } from "@/types/category";
  
 interface Props{
@@ -25,7 +23,7 @@ interface Props{
   onDelete:(category:Category)=>void;
 }
 
-export const columns=({onEdit,onDelete}:Props): ColumnDef<TestCategory>[] => [
+export const columns=({onEdit,onDelete}:Props): ColumnDef<Category>[] => [
  
 
   {
@@ -45,7 +43,6 @@ export const columns=({onEdit,onDelete}:Props): ColumnDef<TestCategory>[] => [
    {
     header: "Action",
     cell: ({ row }) => {
-      const payment = row.original
  
       return (
         <DropdownMenu>

@@ -7,7 +7,6 @@ import {
   FieldError,
   FieldGroup,
   FieldLabel,
-  FieldSeparator,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import PosImage from "./../../../public/img/pos.jpg"
@@ -76,6 +75,7 @@ const loginSchema = z.object({
                 <p className="text-balance text-muted-foreground">
                   Login to system
                 </p>
+                {error && <p className="text-sm font-medium text-red-500 mt-2">{error}</p>}
               </div>
               
             <form.Field
@@ -140,7 +140,9 @@ const loginSchema = z.object({
               </a>
 
               <Field>
-                <Button type="submit">Login</Button>
+                <Button type="submit" disabled={isLoading}>
+                  {isLoading ? "Logging in..." : "Login"}
+                </Button>
               </Field>
                
               <FieldDescription className="text-center">

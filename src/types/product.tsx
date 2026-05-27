@@ -21,3 +21,13 @@ export interface IProductImage {
   imageUrl: string;
   fileName: string;
 }
+
+export interface ProductPayload {
+  name: string;
+  description: string;
+  color: string;
+  price: number;
+  qty: number;
+  categoryId: number;
+  is_active: boolean;
+}

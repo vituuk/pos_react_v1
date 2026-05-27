@@ -1,6 +1,11 @@
-export interface CategoryPayload{
-    id:number,
-    name:string,
+export interface CategoryPayload {
+    id?: number;
+    name: string;
+    createdAt?: string;
 }
 
-export type Category = CategoryPayload;
+export interface Category {
+    id: number;
+    name: string;
+    createdAt: string;
+}

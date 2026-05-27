@@ -18,6 +18,6 @@ export interface LoginPayload {
   password: string;
 }
 
-export const authLogin = async (request?: LoginPayload) => {
+export const authLogin = async (request?: LoginPayload): Promise<any> => {
   return await api.post(`/api/v1/auth/login`, request);
 };

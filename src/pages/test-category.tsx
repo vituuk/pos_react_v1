@@ -10,7 +10,7 @@ import { toast } from "sonner";
 import ConfirmDelete from "@/components/test-category/ConfirmDelete";
 
 const Categories = () => {
-  const { data, isLoading } = useCategories();
+  const { data } = useCategories();
   const [open,setOpen]=useState(false);
   const [category,setCategory] = useState<Category | undefined>(undefined)//for edit form
   const {mutate: deleteCategoryMutate} = deleteCategories();

@@ -33,16 +33,15 @@ import {
 import ConfirmDelete from "@/components/products/ConfirmDelete";
 import { toast } from "sonner";
 import { Field, FieldLabel } from "@/components/ui/field";
-import FileUpload01 from "@/components/file-upload-01";
  
-const Product = () => {
+const ProductPage = () => {
   
   const navigate = useNavigate();
   const [searchInput,setSearchInput]=useState("");
   const [open,setOpen]=useState(false);
   const [page,setPage] = useState(1);
   const [limit,setLimit] = useState(5);
-  const {data:productData,isLoading} = getProduct(searchInput,page,limit);
+  const {data:productData} = getProduct(searchInput,page,limit);
   const pagination = productData?.data?.pagination;
   const totalPages = Math.ceil((pagination?.total || 0) / (pagination?.limit || 1));
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
@@ -96,10 +95,7 @@ const Product = () => {
         <Button onClick={()=>{setProduct(undefined); setOpen(true);}} className="bg-black text-white"><CirclePlus/>Create</Button>
       </div>
 
-      <ProductForm open={open}   setOpen={() => {
-          setOpen(false);
-          setProduct(undefined)
-        }} product={product} />
+      <ProductForm open={open} setOpen={handleClose} product={product} />
 
       <DataTable columns={columns({onEdit:handleEdit,onDelete:handleDelete})} data={ productData?.data ?? []}/>
     
@@ -155,4 +151,4 @@ const Product = () => {
   );
 };
 
-export default Product;
+export default ProductPage;

@@ -1,4 +1,4 @@
-import type { productSchema } from "@/components/products/ProductForm";
+import type { ProductPayload } from "@/types/product";
 import api from "./lib/axios";
 
 export const fetchProduct = async (
@@ -17,11 +17,11 @@ export const fetchProduct = async (
       });
 };
 
-export const createProduct = async (request: typeof productSchema) => {
+export const createProduct = async (request: ProductPayload) => {
   return await api.post(`/api/v1/product`, request);
 };
 
-export const updateProduct = async (id: number, request: typeof productSchema) => {
+export const updateProduct = async (id: number, request: ProductPayload) => {
     return await api.put(`/api/v1/product/${id}`, request);
 };
 
