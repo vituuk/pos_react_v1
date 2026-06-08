@@ -2,14 +2,17 @@
 import { useState,useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
-  ChevronLeft,
-  ChevronRight,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   Plus,
   Trash2,
-  QrCode,
   TrashIcon,
   MinusIcon,
   PlusIcon,
@@ -117,7 +120,7 @@ export default function PosPage() {
           name: product.name,
           category: product.category?.name || "Uncategorized",
           price: Number(product.price),
-          imageUrl: product.productImages?.[0]?.imageUrl || "/placeholder.svg",
+          imageUrl: product.productImages?.[0]?.imageUrl || "/img/no-image.jpg",
           stock: product.qty,
           qty: 1,
         },
@@ -223,35 +226,34 @@ export default function PosPage() {
   }
 
   return (
-   
-    <div>
-      <div className="flex h-screen">
+    <div className="h-[calc(100vh-85px)] overflow-hidden">
+      <div className="flex h-full">
         {/* Main Content */}
-        <div className="flex flex-1 flex-col">
+        <div className="flex flex-1 flex-col min-h-0">
           {/* Header */}
-          <div className="border-b p-4">
-            <div className="flex items-center justify-between">
+          <div className="p-4">
+            <div className="flex items-center gap-4">
               <h1 className="text-xl font-semibold">Categories</h1>
-              <div className="flex items-center gap-2">
-                <ChevronLeft className="text-muted-foreground h-5 w-5" />
-                <ChevronRight className="text-muted-foreground h-5 w-5" />
-              </div>
-            </div>
-          </div>
-      
-          {/* Categories */}
-          <div className="border-b p-4">
-            <div className="flex gap-4 overflow-x-auto">
-              {allCategories.map((category, index) => (
-                <div
-                  key={index}
-                  className="hover:bg-muted flex min-w-[80px] cursor-pointer flex-col items-center rounded-lg p-2 bg-orange-100"
-                  onClick={() => setSelectedCategory(category.id)}>
-                  <span className=" text-center text-[18px]  px-2 py-1">
-                    {category.name}
-                  </span>
-                </div>
-              ))}
+              <Select
+                value={selectedCategory === undefined ? "all" : String(selectedCategory)}
+                onValueChange={(value) => {
+                  setSelectedCategory(value === "all" ? undefined : Number(value));
+                }}
+              >
+                <SelectTrigger className="w-[180px] rounded-[10px] bg-background border-border">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="rounded-[10px]">
+                  {allCategories.map((category) => (
+                    <SelectItem
+                      key={category.id === undefined ? "all" : String(category.id)}
+                      value={category.id === undefined ? "all" : String(category.id)}
+                    >
+                      {category.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
      
@@ -259,7 +261,7 @@ export default function PosPage() {
           <div className="flex-1 overflow-auto p-6">
 
                   <Input
-              placeholder="Search product name..."
+              placeholder="Search your favorite foods..."
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
               className="w-[500px] mb-4"
@@ -276,10 +278,13 @@ export default function PosPage() {
                     <div className="relative aspect-video overflow-hidden rounded-t-lg">
                       <img
                         src={
-                          item.productImages?.[0]?.imageUrl ?? "/no-image.png"
+                          item.productImages?.[0]?.imageUrl ?? "/img/no-image.jpg"
                         }
                         alt={item.name}
                         className="object-fill w-full h-full"
+                        onError={(e) => {
+                          e.currentTarget.src = "/img/no-image.jpg";
+                        }}
                       />
                     </div>
                     <div className="p-4">
@@ -308,10 +313,10 @@ export default function PosPage() {
         </div>
      
         {/* Right Sidebar - Order Summary */}
-        <div className="flex w-80 flex-col border-l">
+        <div className="flex w-80 flex-col border-l h-full min-h-0 overflow-hidden">
           <div className="border-b p-4">
             <div className="flex items-center justify-between">
-            <h2 className="font-semibold">Cart</h2>
+            <h2 className="font-semibold">All Orders</h2>
               <div className="flex items-center gap-2">
                 <Plus className="text-muted-foreground h-4 w-4" />
                 <Trash2
@@ -322,110 +327,89 @@ export default function PosPage() {
             </div>
           </div>
         
-          <ScrollArea className="flex-1 p-4">
-            <div className="space-y-3">
-              {cartItems.map((item: ICart, index: number) => (
+          <ScrollArea className="flex-1 min-h-0">
+            <div className="space-y-3 p-4">
+               {cartItems.map((item: ICart, index: number) => (
                 <div
                   key={`${item.id}-${index}`}
-                  className="flex items-center gap-3"
+                  className="flex items-center gap-3 p-2.5 rounded-lg border bg-card shadow-2xs hover:shadow-xs transition-shadow"
                 >
-                  <div className="bg-muted flex h-12 items-center justify-center rounded-lg">
-                    <div className="">
-                      <img src={item.imageUrl} alt={item.name} />
-                    </div>
+                  {/* Fixed-size image box */}
+                  <div className="w-12 h-12 rounded-full overflow-hidden bg-muted border border-border shrink-0">
+                    <img
+                      src={item.imageUrl}
+                      alt={item.name}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.currentTarget.src = "/img/no-image.jpg";
+                      }}
+                    />
                   </div>
-                  <div className="flex-1">
-                    <h4 className="text-sm font-medium">{item.name}</h4>
-                    <p className="text-muted-foreground text-xs">
-                      {item.category}
-                    </p>
-                    <p>${item.price}</p>
+
+                  {/* Product Details */}
+                  <div className="flex-1 min-w-0">
+                    <h4 className="text-xs font-semibold text-foreground truncate">{item.name}</h4>
+                    <p className="text-[10px] text-muted-foreground truncate">{item.category}</p>
+                    <p className="text-xs font-bold text-blue-600 mt-1">${item.price}</p>
                   </div>
                 
-                  <div className="flex flex-col items-end gap-2">
-                    <p className="font-semibold">${item.price * item.qty}</p>
+                  {/* Controls & Price */}
+                  <div className="flex flex-col items-end gap-1.5 shrink-0">
+                    <p className="text-xs font-bold text-foreground">${(item.price * item.qty).toFixed(2)}</p>
 
-                 
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1 bg-muted/50 p-0.5 rounded-md border border-border">
                       <Button
-                        className=""
-                        type="button"
+                        variant="ghost"
+                        className="h-6 w-6 rounded-md p-0 hover:bg-background shrink-0"
                         onClick={() => updateQty(item.id, item.qty - 1)}
                       >
-                        <MinusIcon />
+                        <MinusIcon className="h-3 w-3" />
                       </Button>
                   
-                      <span>{item.qty}</span>
+                      <span className="text-xs font-semibold min-w-4 text-center">{item.qty}</span>
                
                       <Button
-                        className=""
-                        type="button"
+                        variant="ghost"
+                        className="h-6 w-6 rounded-md p-0 hover:bg-background shrink-0"
                         onClick={() => updateQty(item.id, item.qty + 1)}
                       >
-                        <PlusIcon />
+                        <PlusIcon className="h-3 w-3" />
                       </Button>
 
                       <Button
-                        className="bg-red-500"
-                        type="button"
+                        variant="ghost"
+                        className="h-6 w-6 rounded-md p-0 hover:bg-red-50 text-red-500 hover:text-red-600 shrink-0"
                         onClick={() => removeFromCart(item.id)}
                       >
-                        <TrashIcon />
+                        <TrashIcon className="h-3.5 w-3.5" />
                       </Button>
                     </div>
                   </div>
                 </div>
-
               ))}
             </div>
           
           </ScrollArea>
 
-          <div className="border-t p-4">
+          <div className="p-4">
             <div className="mb-4 space-y-2">
               <div className="flex justify-between text-sm">
                 <span>Subtotal</span>
                 <span>{subtotal.toFixed(2)}$</span>
               </div>
-              <Separator />
               <div className="flex justify-between font-semibold">
                 <span>Total</span>
                 <span>{total.toFixed(2)}$</span>
               </div>
             </div>
-           
-            <div className="mb-4 grid grid-cols-2 gap-2">
-              <Button
-                variant="outline"
-                className="flex h-auto flex-col items-center bg-transparent p-4"
-              >
-                <div className="mb-2 flex h-8 w-8 items-center justify-center rounded-lg bg-green-100">
-                  <span className="font-semibold text-green-600">$</span>
-                </div>
-                <span className="text-xs">Cash</span>
-              </Button>
-
-              <Button
-                variant="outline"
-                className="flex h-auto flex-col items-center bg-transparent p-4"
-              >
-                <div className="mb-2 flex h-8 w-8 items-center justify-center rounded-lg bg-purple-100">
-                  <QrCode className="h-4 w-4 text-purple-600" />
-                </div>
-                <span className="text-xs">Scan</span>
-              </Button>
-            </div>
-         
+            
             <Button
               variant="outline"
-               
               onClick={() => setIsOpen(true)}
-              className="w-full bg-blue-600 py-3 text-white hover:bg-blue-700"
+              className="w-full bg-slate-600 dark:bg-slate-300 py-3 text-white hover:bg-slate-500 hover:text-white dark:hover:bg-slate-600 border-none"
             >
-             
               Checkout ${total.toFixed(2)}
             </Button>
-            
           </div>
         </div>
       </div>
@@ -441,26 +425,30 @@ export default function PosPage() {
           {cartItems.map((item: ICart, index: number) => (
             <div
               key={`${item.id}-${index}`}
-              className="flex items-center gap-6"
+              className="flex items-center gap-4 p-2 rounded-lg border bg-card/50"
             >
-               
-              <div className="bg-muted flex w-[100px] h-12 items-center justify-center rounded-lg">
-                <div className="">
-                  <img src={item.imageUrl} alt={item.name} />
-                </div>
+              <div className="w-16 h-16 rounded-full overflow-hidden bg-muted border border-border shrink-0">
+                <img
+                  src={item.imageUrl}
+                  alt={item.name}
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.currentTarget.src = "/img/no-image.jpg";
+                  }}
+                />
               </div>
             
-              <div className="flex-1">
-                <h4 className="text-sm font-medium">{item.name}</h4>
-                <p className="text-muted-foreground text-xs">{item.category}</p>
-                <div className="flex gap-4">
-                  <p className="text-primary">${item.price}</p>
-                  <p>X {item.qty}</p>
+              <div className="flex-1 min-w-0">
+                <h4 className="text-sm font-semibold text-foreground truncate">{item.name}</h4>
+                <p className="text-xs text-muted-foreground truncate">{item.category}</p>
+                <div className="flex gap-4 mt-1">
+                  <p className="text-xs font-bold text-blue-600">${item.price}</p>
+                  <p className="text-xs text-muted-foreground">Qty: {item.qty}</p>
                 </div>
               </div>
      
-              <div className="flex flex-col items-end gap-2">
-                <p className="font-semibold">${item.price * item.qty}</p>
+              <div className="flex flex-col items-end gap-1.5 shrink-0">
+                <p className="text-sm font-bold text-foreground">${(item.price * item.qty).toFixed(2)}</p>
               </div>
             </div>
           ))}

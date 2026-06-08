@@ -35,7 +35,7 @@ export const uploadProductImage = async (id: number, file: File) => {
 
   return await api.post(`/api/v1/product-image/${id}/upload`, formData, {
     headers: {
-      "Content-Type": "multipart/form-data",
+      "Content-Type": undefined, // Let Axios auto-set multipart/form-data with boundary
     },
   });
 };

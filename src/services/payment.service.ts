@@ -7,3 +7,7 @@ export const createPayment = async (orderId: number) => {
 export const checkTransaction = async (tranId?: string) => {
   return await api.post(`/api/v1/payments/${tranId}/check`);
 };
+
+export const getPayments = async () => {
+  return await api.get("/api/v1/payments");
+};

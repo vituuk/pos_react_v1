@@ -12,8 +12,10 @@ import ConfirmDelete from "@/components/category/ConfirmDelete";
 import { useDebounce } from 'use-debounce';
 import { getAccessToken } from "@/utils/tokenStorage";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const CategoryPage = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [open,setOpen]=useState(false);
   const {mutate: deleteCategoryMutate} = useDeleteCategory();
@@ -65,13 +67,13 @@ const CategoryPage = () => {
           <Input className="w-[290px]" 
           value={searchInput}
           onChange={(e)=>setSearchInput(e.target.value)}
-          placeholder="Search"/> 
-      <Button>Search</Button>
+          placeholder={t("search", "Search")}/> 
+      <Button>{t("search", "Search")}</Button>
         </div>
-        <Button onClick={()=>{setCategory(undefined); setOpen(true);}} className="bg-black text-white"><CirclePlus/>Create</Button>
+        <Button onClick={()=>{setCategory(undefined); setOpen(true);}} className="bg-black text-white"><CirclePlus/>{t("categories.create", "Create")}</Button>
       </div>
 
-      <DataTable columns={columns({onEdit:handleEdit, onDelete:handleDelete})} data={data?.data ?? []} />
+      <DataTable columns={columns({onEdit:handleEdit, onDelete:handleDelete, t})} data={data?.data ?? []} />
 
       <CategoryForm category={category} open={open} setOpen={handleClose}/>
        

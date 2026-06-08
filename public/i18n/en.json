@@ -1,0 +1,119 @@
+{
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "pos": "POS",
+    "products": "Products",
+    "productList": "Product List",
+    "settings": "Settings",
+    "categories": "Categories",
+    "categoryList": "Category List",
+    "testCategory": "Test Category",
+    "customers": "Customers",
+    "allCustomers": "All Customers",
+    "segments": "Segments",
+    "orders": "Orders",
+    "payments": "Payments",
+    "merchant": "Merchant",
+    "introduction": "Introduction",
+    "getStarted": "Get Started",
+    "tutorials": "Tutorials",
+    "changelog": "Changelog",
+    "general": "General",
+    "team": "Team",
+    "billing": "Billing",
+    "limits": "Limits",
+    "logout": "Log out"
+  },
+
+  "dashboard": {
+    "title": "Dashboard",
+    "totalRevenue": "Total Revenue",
+    "totalRevenueSub": "All-time revenue from orders",
+    "totalOrders": "Total Orders",
+    "totalOrdersSub": "All orders placed",
+    "totalProducts": "Total Products",
+    "totalProductsSub": "Active product listings",
+    "categories": "Categories",
+    "categoriesSub": "Product categories",
+    "recentOrders": "Recent Orders",
+    "recentOrdersSub": "Latest transactions from the POS system",
+    "ordersCount": "{{count}} orders",
+    "noOrders": "No orders found",
+    "orderNumber": "Order #",
+    "date": "Date",
+    "items": "Items",
+    "discount": "Discount",
+    "total": "Total",
+    "status": "Status",
+    "statusCompleted": "Completed",
+    "statusPending": "Pending",
+    "itemCount": "{{count}} item(s)"
+  },
+
+  "auth": {
+    "logout": "Log out",
+    "logoutConfirm": "Are you sure you want to Logout?"
+  },
+
+  "common": {
+    "loading": "Loading...",
+    "cancel": "Cancel",
+    "confirm": "Confirm"
+  },
+
+  "products": {
+    "no": "NO",
+    "id": "ID",
+    "name": "Name",
+    "image": "Image",
+    "description": "Description",
+    "color": "Color",
+    "price": "Price",
+    "quantity": "Quantity",
+    "category": "Category",
+    "actions": "Actions",
+    "edit": "Edit",
+    "delete": "Delete",
+    "search": "Search",
+    "create": "Create",
+    "rowsPerPage": "Rows per page",
+    "previous": "Previous",
+    "next": "Next",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "username": "Username",
+    "phone": "Phone",
+    "email": "Email"
+  },
+
+  "categories": {
+    "id": "ID",
+    "name": "Name",
+    "createdAt": "Created At",
+    "actions": "Actions",
+    "edit": "Edit",
+    "delete": "Delete",
+    "search": "Search",
+    "create": "Create"
+  },
+
+  "orders": {
+    "orderNumber": "Order Number",
+    "date": "Date",
+    "customer": "Customer",
+    "guest": "Guest",
+    "itemsCount": "Items Count"
+  },
+
+  "payments": {
+    "transactionId": "Transaction ID",
+    "method": "Method",
+    "paidAt": "Paid Date",
+    "statusPaid": "Paid",
+    "statusPending": "Pending",
+    "statusFailed": "Failed"
+  },
+
+  "search":"Search"
+
+}

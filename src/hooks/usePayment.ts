@@ -1,6 +1,16 @@
-import { checkTransaction, createPayment } from "@/services/payment.service";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { checkTransaction, createPayment, getPayments } from "@/services/payment.service";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+
+export const usePayments = () => {
+  return useQuery({
+    queryKey: ["payments"],
+    queryFn: async () => {
+      const response = await getPayments();
+      return response.data ?? [];
+    },
+  });
+};
 
 export const useCreatePayment = () => {
   const queryClient = useQueryClient();

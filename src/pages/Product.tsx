@@ -10,6 +10,7 @@ import type { Product } from "@/types/product";
 
 import { getAccessToken } from "@/utils/tokenStorage";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import {
   Select,
@@ -35,7 +36,7 @@ import { toast } from "sonner";
 import { Field, FieldLabel } from "@/components/ui/field";
  
 const ProductPage = () => {
-  
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [searchInput,setSearchInput]=useState("");
   const [open,setOpen]=useState(false);
@@ -90,23 +91,23 @@ const ProductPage = () => {
       <div className="py-2 flex mb-4 justify-between ">
         <div className="flex justify-center gap-2">
         <Input className="w-64" onChange={(e)=>setSearchInput(e.target.value)} value={searchInput}/>
-        <Button onClick={()=>handleSearch()}>Search</Button>
+        <Button onClick={()=>handleSearch()}>{t("products.search")}</Button>
         </div>
-        <Button onClick={()=>{setProduct(undefined); setOpen(true);}} className="bg-black text-white"><CirclePlus/>Create</Button>
+        <Button onClick={()=>{setProduct(undefined); setOpen(true);}} className="bg-black text-white"><CirclePlus/>{t("products.create")}</Button>
       </div>
 
       <ProductForm open={open} setOpen={handleClose} product={product} />
 
-      <DataTable columns={columns({onEdit:handleEdit,onDelete:handleDelete})} data={ productData?.data ?? []}/>
+      <DataTable columns={columns({onEdit:handleEdit,onDelete:handleDelete, t})} data={ productData?.data ?? []}/>
     
       <ConfirmDelete isOpen={isDelete} setIsOpen={setIsDelete} product={product} confirmDelete={confirmDelete} />
     
     <div className="flex justify-between mt-4 items-center">
-      <Field orientation="horizontal" className="w-[220px]">
-        <FieldLabel htmlFor="select-rows-per-page">Rows per page</FieldLabel>
+      <Field orientation="horizontal" className="w-auto flex items-center gap-2">
+        <FieldLabel htmlFor="select-rows-per-page" className="whitespace-nowrap">{t("products.rowsPerPage")}</FieldLabel>
        
         <Select defaultValue="10" onValueChange={(value)=> setLimit(Number(value))}>
-          <SelectTrigger className="w-20" id="select-rows-per-page">
+          <SelectTrigger className="w-20 shrink-0" id="select-rows-per-page">
             <SelectValue />
           </SelectTrigger>
 

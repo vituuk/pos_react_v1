@@ -75,6 +75,14 @@ const ProductForm = ({ open, setOpen, product }: Props) => {
 
   const { mutate: deleteProductImageMutate } = useDeleteProductImage();
 
+  const uploadedFilesRef = useRef(uploadedFiles);
+  const deleteImageIdsRef = useRef(deleteImageIds);
+  
+  useEffect(() => {
+    uploadedFilesRef.current = uploadedFiles;
+    deleteImageIdsRef.current = deleteImageIds;
+  }, [uploadedFiles, deleteImageIds]);
+
   const form = useForm({
     defaultValues: {
       name: product?.name || "",
@@ -98,13 +106,13 @@ const ProductForm = ({ open, setOpen, product }: Props) => {
             onSuccess: (res) => {
               toast.success("Product updated successfully");
               if (res.data?.id) {
-                uploadedFiles.map((file) =>
+                uploadedFilesRef.current.map((file) =>
                   uploadProductImageMutate({ id: res.data.id, request: file }),
                 );
               }
               // call to delete image ids
-              console.log("delete image ids", deleteImageIds);
-              deleteImageIds.map((imageId) =>
+              console.log("delete image ids", deleteImageIdsRef.current);
+              deleteImageIdsRef.current.map((imageId) =>
                 deleteProductImageMutate({ id: imageId }, {
                   onSuccess: () => {
                     toast.success("Product image deleted successfully");
@@ -125,8 +133,8 @@ const ProductForm = ({ open, setOpen, product }: Props) => {
         createProductMutate(value as ProductPayload, {
           onSuccess: (res) => {
             // toast.success("Product created successfully");
-              if (res.data.id) {
-              uploadedFiles.forEach((file) => {
+              if (res.data?.id) {
+              uploadedFilesRef.current.forEach((file) => {
                 uploadProductImageMutate({ id: res.data.id, request: file });
               });
             }

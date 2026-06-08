@@ -17,24 +17,25 @@ import ImagePreviewModal from "./ImagePreviewModal";
 interface Props{
   onEdit:(product:Product)=>void;
   onDelete:(product:Product)=>void;
+  t: any;
 }
 
-export const columns = ({onEdit,onDelete}:Props): ColumnDef<Product>[] =>[
+export const columns = ({onEdit,onDelete, t}:Props): ColumnDef<Product>[] =>[
   {
-    header: "NO",
+    header: t("products.no", "NO"),
     cell: ({ row }) => <div>{row.index+1}</div>,
   },
   {
     accessorKey: "id",
-    header: "ID",
+    header: t("products.id", "ID"),
   },
   {
     accessorKey: "name",
-    header: "Name",
+    header: t("products.name", "Name"),
     cell: ({ row }) => <div>{row.original.name}</div>,
   },
     {
-    header: "Image",
+    header: t("products.image", "Image"),
     cell: ({ row }) => {
       const [isPreviewOpen, setIsPreviewOpen] = useState(false);
 
@@ -65,68 +66,48 @@ export const columns = ({onEdit,onDelete}:Props): ColumnDef<Product>[] =>[
   },
   {
     accessorKey: "description",
-    header: "Description",
-    //  cell:({row})=>{
-    //   return <div>{row.original.description.slice(0, 10)}</div>
-    // }
+    header: t("products.description", "Description"),
   },
   {
     accessorKey: "color",
-    header: "Color",
-    //  cell:({row})=>{
-    //   return <div>{row.original.description.slice(0, 10)}</div>
-    // }
+    header: t("products.color", "Color"),
   },
   {
     accessorKey: "price",
-    header: "Price",
+    header: t("products.price", "Price"),
     cell:({row})=>{
       return <div className="bg-sky-500 text-center py-[2px] w-[60px] rounded-2xl text-white">{row.original.price}</div>
-      
     }
   },
   {
     accessorKey: "qty",
-    header: "Quantity",
+    header: t("products.quantity", "Quantity"),
     cell:({row})=>{
       return <div className="text-red-600 text-2xl">{row.original.qty}</div>
     }
   },
   {
     accessorKey: "category",
-    header: "Category",
+    header: t("products.category", "Category"),
 
     cell: ({ row }) => {
      return <div className="bg-sky-500 text-center py-[2px] w-[100px] rounded-2xl text-white" id="">{row.original.category?.name}</div>;
     },
   },
-  // {
-  //   accessorKey: "price",
-  //   header: "Price",
-  // },
-  //   {
-  //   // accessorKey: "images",
-  //   header: "Image",
-  //   cell: ({ row }) =><div>
-  //     <img className="w-20" src={row.original.images[0]} alt="image" />
-  //   </div>
-  // },
   {
     accessorKey: "actions",
-    header: "Actions",
-    // id:"actions",
+    header: t("products.actions", "Actions"),
     cell:({row})=>{
     return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        {/* <Button variant="outline">Actions</Button> */}
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-ellipsis-icon lucide-ellipsis"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuGroup>
           <DropdownMenuItem onClick={()=>onEdit(row.original)}>
             <PencilIcon />
-            Edit
+            {t("products.edit", "Edit")}
           </DropdownMenuItem>
         
         </DropdownMenuGroup>
@@ -134,7 +115,7 @@ export const columns = ({onEdit,onDelete}:Props): ColumnDef<Product>[] =>[
         <DropdownMenuGroup>
           <DropdownMenuItem onClick={()=>onDelete(row.original)}>
             <TrashIcon />
-            Delete
+            {t("products.delete", "Delete")}
           </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>

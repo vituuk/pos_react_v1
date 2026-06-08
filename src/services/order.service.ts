@@ -11,3 +11,7 @@ export interface OrderPayload{
 export const createOrder = async (request: OrderPayload) => {
   return await api.post("/api/v1/order", request)
 };
+
+export const getOrders = async () => {
+  return await api.get("/api/v1/order");
+};

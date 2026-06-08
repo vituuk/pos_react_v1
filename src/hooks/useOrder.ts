@@ -1,7 +1,17 @@
  
-import { createOrder } from "@/services/order.service";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createOrder, getOrders } from "@/services/order.service";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+
+export const useOrders = () => {
+  return useQuery({
+    queryKey: ["orders"],
+    queryFn: async () => {
+      const response = await getOrders();
+      return response.data ?? [];
+    },
+  });
+};
 
 export const useCreateOrder = () => {
   const queryClient = useQueryClient();
