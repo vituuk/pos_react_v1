@@ -18,13 +18,12 @@
     "getStarted": "Get Started",
     "tutorials": "Tutorials",
     "changelog": "Changelog",
-    "general": "General",
+    "setting": "Setting",
     "team": "Team",
     "billing": "Billing",
     "limits": "Limits",
     "logout": "Log out"
   },
-
   "dashboard": {
     "title": "Dashboard",
     "totalRevenue": "Total Revenue",
@@ -47,20 +46,24 @@
     "status": "Status",
     "statusCompleted": "Completed",
     "statusPending": "Pending",
-    "itemCount": "{{count}} item(s)"
+    "itemCount": "{{count}} item(s)",
+    "totalVisitors": "Total Visitors",
+    "totalLast3Months": "Total for the last 3 months",
+    "totalLast30Days": "Total for the last 30 days",
+    "totalLast7Days": "Total for the last 7 days",
+    "range3Months": "Last 3 months",
+    "range30Days": "Last 30 days",
+    "range7Days": "Last 7 days"
   },
-
   "auth": {
     "logout": "Log out",
     "logoutConfirm": "Are you sure you want to Logout?"
   },
-
   "common": {
     "loading": "Loading...",
     "cancel": "Cancel",
     "confirm": "Confirm"
   },
-
   "products": {
     "no": "NO",
     "id": "ID",
@@ -85,7 +88,6 @@
     "phone": "Phone",
     "email": "Email"
   },
-
   "categories": {
     "id": "ID",
     "name": "Name",
@@ -96,7 +98,6 @@
     "search": "Search",
     "create": "Create"
   },
-
   "orders": {
     "orderNumber": "Order Number",
     "date": "Date",
@@ -104,7 +105,6 @@
     "guest": "Guest",
     "itemsCount": "Items Count"
   },
-
   "payments": {
     "transactionId": "Transaction ID",
     "method": "Method",
@@ -113,7 +113,37 @@
     "statusPending": "Pending",
     "statusFailed": "Failed"
   },
-
-  "search":"Search"
-
+  "search": "Search",
+  "settings": {
+    "title": "General Settings",
+    "subtitle": "Configure store details, currency, default tax rates, and system parameters.",
+    "tabGeneral": "Store Details",
+    "tabPos": "POS & Checkout",
+    "tabReceipt": "Receipt Style",
+    "tabAppearance": "Appearance",
+    "storeName": "Store Name",
+    "storePhone": "Store Phone",
+    "storeEmail": "Store Email",
+    "storeAddress": "Store Address",
+    "currency": "Default Currency",
+    "exchangeRate": "Exchange Rate (USD to KHR)",
+    "taxRate": "Default Tax Rate (%)",
+    "discountRate": "Default Discount Rate (%)",
+    "receiptHeader": "Receipt Header Message",
+    "receiptFooter": "Receipt Footer Message",
+    "allowOutOfStock": "Allow Checkout When Out of Stock",
+    "enableSounds": "Enable Checkout Sound Effects",
+    "enableAutoPrint": "Auto-Print Receipt After Payment",
+    "theme": "Application Theme",
+    "themeLight": "Light Theme",
+    "themeDark": "Dark Theme",
+    "themeSystem": "System Default",
+    "saveBtn": "Save Settings",
+    "resetBtn": "Reset Defaults",
+    "saveSuccess": "Settings saved successfully!",
+    "resetSuccess": "Settings reset to defaults!",
+    "logoLabel": "Store Logo Image",
+    "logoUploadBtn": "Change Logo",
+    "logoRemoveBtn": "Remove Logo"
+  }
 }

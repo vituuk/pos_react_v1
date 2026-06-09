@@ -559,42 +559,29 @@ const ProductForm = ({ open, setOpen, product }: Props) => {
                     .map((image: IProductImage, index: number) => (
                       <div
                         key={index}
-                        className="border border-border rounded-lg p-2 flex flex-col"
+                        className="border border-border rounded-lg p-2 flex items-center justify-start gap-4"
                       >
-                        <div className="flex items-center gap-2">
-                          <div className="w-18 h-14 bg-muted rounded-sm flex items-center justify-center self-start row-span-2 overflow-hidden">
-                            <img
-                              src={image.imageUrl}
-                              alt={image.fileName}
-                              className="w-full h-full object-cover"
-                            />
-                          </div>
-
-                          <div className="flex-1 pr-1">
-                            <div className="flex justify-between items-center">
-                              <div className="flex items-center gap-2">
-                                <span className="text-sm text-foreground truncate max-w-[250px]">
-                                  {image.fileName}
-                                </span>
-                              </div>
-                              <Button
-                                variant="ghost"
-                                size="icon-sm"
-                                className="bg-transparent! hover:text-red-500"
-                                  type="button"
-                                onClick={() => {
-                                  setDeleteImageIds((prev) => [
-                                    ...prev,
-                                    image.id,
-                                  ]);
-                                }}
-
-                              >
-                                <Trash2 className="h-4 w-4" />
-                              </Button>
-                            </div>
-                          </div>
+                        <div className="w-[200px] h-[100px] bg-transparent rounded-md flex items-center justify-center overflow-hidden">
+                          <img
+                            src={image.imageUrl}
+                            alt={image.fileName}
+                            className="w-full h-full object-contain"
+                          />
                         </div>
+                        <Button
+                          variant="ghost"
+                          size="icon-sm"
+                          className="bg-transparent! hover:text-red-500"
+                          type="button"
+                          onClick={() => {
+                            setDeleteImageIds((prev) => [
+                              ...prev,
+                              image.id,
+                            ]);
+                          }}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
                       </div>
                     ),
                   )}
@@ -612,43 +599,27 @@ const ProductForm = ({ open, setOpen, product }: Props) => {
 
                   return (
                     <div
-                      className="border border-border rounded-lg p-2 flex flex-col"
+                      className="border border-border rounded-lg p-2 flex items-center justify-start gap-4"
                       key={file.name + index}
                       onLoad={() => {
                         return () => URL.revokeObjectURL(imageUrl);
                       }}
                     >
-                      <div className="flex items-center gap-2">
-                        <div className="w-18 h-14 bg-muted rounded-sm flex items-center justify-center self-start row-span-2 overflow-hidden">
-                          <img
-                            src={imageUrl}
-                            alt={file.name}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-
-                        <div className="flex-1 pr-1">
-                          <div className="flex justify-between items-center">
-                            <div className="flex items-center gap-2">
-                              <span className="text-sm text-foreground truncate max-w-[250px]">
-                                {file.name}
-                              </span>
-                              <span className="text-sm text-muted-foreground whitespace-nowrap">
-                                {Math.round(file.size / 1024)} KB
-                              </span>
-                            </div>
-                            <Button
-                              variant="ghost"
-                              size="icon-sm"
-                              className="bg-transparent! hover:text-red-500"
-                              onClick={() => removeFile(file.name)}
-                            >
-                              <Trash2 className="h-4 w-4" />
-                            </Button>
-                          </div>
-
-                        </div>
+                      <div className="w-[200px] h-[100px] bg-transparent rounded-md flex items-center justify-center overflow-hidden">
+                        <img
+                          src={imageUrl}
+                          alt={file.name}
+                          className="w-full h-full object-contain"
+                        />
                       </div>
+                      <Button
+                        variant="ghost"
+                        size="icon-sm"
+                        className="bg-transparent! hover:text-red-500"
+                        onClick={() => removeFile(file.name)}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
                     </div>
                   );
                 })}

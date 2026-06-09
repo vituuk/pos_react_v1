@@ -9,3 +9,9 @@ export const fetchRecentOrders = async (limit = 10) => {
     params: { limit },
   });
 };
+
+export const fetchChartStats = async (range: string) => {
+  return await api.get("/api/v1/dashboard/chart-stats", {
+    params: { range },
+  });
+};

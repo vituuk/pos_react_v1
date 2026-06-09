@@ -1,21 +1,18 @@
 import { TrendingUp, TrendingDown, ShoppingCart, Package, Tag, DollarSign } from "lucide-react";
 import { useDashboardStats, useRecentOrders } from "@/hooks/use-dashboard";
 import { useTranslation } from "react-i18next";
+import TotalVisitorsChart from "@/components/TotalVisitorsChart";
+import { formatDateLabel } from "@/utils/date";
+import { formatPrice } from "@/utils/currency";
 
 // ─── helpers ─────────────────────────────────────────────────────────────────
 function fmtUSD(val?: number) {
-  if (val === undefined || val === null) return "$0.00";
-  return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(val);
+  if (val === undefined || val === null) return formatPrice(0);
+  return formatPrice(val);
 }
 function fmtNum(val?: number) {
   if (val === undefined || val === null) return "0";
   return new Intl.NumberFormat("en-US").format(val);
-}
-function fmtDate(dateStr?: string) {
-  if (!dateStr) return "—";
-  return new Date(dateStr).toLocaleDateString("en-US", {
-    month: "short", day: "numeric", year: "numeric",
-  });
 }
 function changePill(change: number, suffix = "%") {
   const positive = change >= 0;
@@ -73,7 +70,7 @@ function StatusBadge({ total, labels }: { total: number; labels: { completed: st
 
 // ─── Dashboard Page ───────────────────────────────────────────────────────────
 export default function DashboardPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { data: statsData, isLoading: statsLoading } = useDashboardStats();
   const { data: ordersData, isLoading: ordersLoading } = useRecentOrders(8);
 
@@ -129,6 +126,9 @@ export default function DashboardPage() {
         ))}
       </div>
 
+      {/* ── Total Visitors Area Chart ── */}
+      <TotalVisitorsChart />
+
       {/* ── Recent Orders Table ── */}
       <div className="chart-card">
         <div className="chart-card-header" style={{ marginBottom: "1rem" }}>
@@ -172,7 +172,7 @@ export default function DashboardPage() {
                     <td>
                       <span className="db-order-number">{order.orderNumber}</span>
                     </td>
-                    <td className="db-table-muted">{fmtDate(order.createdAt)}</td>
+                    <td className="db-table-muted">{formatDateLabel(order.createdAt, i18n.language, true)}</td>
                     <td className="db-table-muted">
                       {t("dashboard.itemCount", { count: order.orderDetails?.length ?? 0 })}
                     </td>

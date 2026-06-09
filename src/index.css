@@ -335,15 +335,24 @@
 }
 
 .chart-range-btn:hover {
-  background: #dbeafe;
-  color: #1e40af;
+  background: rgba(0, 0, 0, 0.04);
+  color: var(--foreground);
+}
+
+.dark .chart-range-btn:hover {
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .chart-range-btn.active {
-  background: #1e40af;     /* solid navy-blue — matches image active state */
-  color: #ffffff;
+  background: #ffffff;
+  color: var(--foreground);
   font-weight: 600;
-  box-shadow: 0 1px 4px rgba(30, 64, 175, 0.35);
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.dark .chart-range-btn.active {
+  background: var(--background);
+  color: var(--foreground);
 }
 
 /* Tooltip */

@@ -49,3 +49,28 @@ export const removeAccessToken = () => {
     document.cookie = `accessToken=;expires=${expired};path=/;SameSite=Strict;Secure`;
     document.cookie = `accessTokenExpiry=;expires=${expired};path=/;SameSite=Strict;Secure`;
 };
+
+export interface DecodedUser {
+  id: number;
+  email: string;
+  fullName: string;
+}
+
+export const getUserFromToken = (): DecodedUser | null => {
+  const token = getAccessToken();
+  if (!token) return null;
+  try {
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split("")
+        .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+        .join("")
+    );
+    return JSON.parse(jsonPayload) as DecodedUser;
+  } catch (error) {
+    console.error("Failed to decode token", error);
+    return null;
+  }
+};

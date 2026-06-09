@@ -13,6 +13,7 @@ import DashboardPage from './pages/Dashboard';
 import CustomerPage from '@/pages/Customer';
 import OrdersPage from '@/pages/Orders';
 import PaymentsPage from '@/pages/Payments';
+import SettingsPage from '@/pages/Settings';
 import { ThemeProvider } from 'next-themes';
 
 const queryClient = new QueryClient();
@@ -37,6 +38,7 @@ const App = () => {
               <Route path='/admin/customers' element={<CustomerPage/>}/>
               <Route path='/admin/orders' element={<OrdersPage/>}/>
               <Route path='/admin/payments' element={<PaymentsPage/>}/>
+              <Route path='/admin/settings' element={<SettingsPage/>}/>
             </Route>
           </Routes>
         </BrowserRouter>
