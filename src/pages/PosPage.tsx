@@ -92,7 +92,7 @@ export default function PosPage() {
   const { data: productData } = getProduct(
     searchText,
     1,
-    10,
+    1000,
     selectedCategory,
   );
   const { data: categoryData } = useCategory();
@@ -185,9 +185,8 @@ export default function PosPage() {
     0,
   );
 
-  const discountAmount = subtotal * (settings.discountRate / 100);
-  const taxAmount = (subtotal - discountAmount) * (settings.taxRate / 100);
-  const total = subtotal - discountAmount + taxAmount;
+  // Discount and tax are completely static and do not work with the real product
+  const total = subtotal;
 
   const updateQty = (id: number, qty: number) => {
     setCartItems((prev) => {
@@ -210,7 +209,7 @@ export default function PosPage() {
     setIsLoading(true);
 
     const payload: OrderPayload = {
-      discount: discountAmount,
+      discount: 0,
       items: cartItems.map((item) => ({
         productId: item.id,
         qty: item.qty,
@@ -447,18 +446,14 @@ export default function PosPage() {
                 <span>Subtotal</span>
                 <span>{formatPrice(subtotal)}</span>
               </div>
-              {settings.discountRate > 0 && (
-                <div className="flex justify-between text-red-500">
-                  <span>Discount ({settings.discountRate}%)</span>
-                  <span>-{formatPrice(discountAmount)}</span>
-                </div>
-              )}
-              {settings.taxRate > 0 && (
-                <div className="flex justify-between text-muted-foreground">
-                  <span>Tax ({settings.taxRate}%)</span>
-                  <span>{formatPrice(taxAmount)}</span>
-                </div>
-              )}
+              <div className="flex justify-between text-red-500">
+                <span>Discount (0%)</span>
+                <span>-{formatPrice(0)}</span>
+              </div>
+              <div className="flex justify-between text-muted-foreground">
+                <span>Tax (0%)</span>
+                <span>{formatPrice(0)}</span>
+              </div>
               <div className="flex justify-between font-bold text-sm text-foreground border-t border-border/40 pt-1 mt-1">
                 <span>Total</span>
                 <span>{formatPrice(total)}</span>
@@ -518,12 +513,8 @@ export default function PosPage() {
 
         <div className="flex justify-end border-t border-border/40 pt-4">
           <div className="text-right space-y-1">
-            {settings.discountRate > 0 && (
-              <p className="text-xs text-red-500">Discount ({settings.discountRate}%): -{formatPrice(discountAmount)}</p>
-            )}
-            {settings.taxRate > 0 && (
-              <p className="text-xs text-muted-foreground">Tax ({settings.taxRate}%): {formatPrice(taxAmount)}</p>
-            )}
+            <p className="text-xs text-red-500">Discount (0%): -{formatPrice(0)}</p>
+            <p className="text-xs text-muted-foreground">Tax (0%): {formatPrice(0)}</p>
             <p className="text-lg font-bold">Total: {formatPrice(total)}</p>
           </div>
         </div>

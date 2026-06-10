@@ -82,7 +82,48 @@ export default function SettingsPage() {
   };
 
   const handleSave = () => {
-    saveSettings(settings);
+    // Check if empty/blank
+    if (String(settings.taxRate) === "" || settings.taxRate === undefined || settings.taxRate === null) {
+      toast.error(t("settings.taxRateRequired", "Tax rate cannot be empty"));
+      return;
+    }
+    if (String(settings.discountRate) === "" || settings.discountRate === undefined || settings.discountRate === null) {
+      toast.error(t("settings.discountRateRequired", "Discount rate cannot be empty"));
+      return;
+    }
+    if (String(settings.exchangeRate) === "" || settings.exchangeRate === undefined || settings.exchangeRate === null) {
+      toast.error(t("settings.exchangeRateRequired", "Exchange rate cannot be empty"));
+      return;
+    }
+
+    const tax = Number(settings.taxRate);
+    const discount = Number(settings.discountRate);
+    const exchange = Number(settings.exchangeRate);
+
+    // Validate ranges
+    if (isNaN(tax) || tax < 0 || tax > 100) {
+      toast.error(t("settings.taxRateInvalid", "Tax rate must be a valid number between 0 and 100"));
+      return;
+    }
+    if (isNaN(discount) || discount < 0 || discount > 100) {
+      toast.error(t("settings.discountRateInvalid", "Discount rate must be a valid number between 0 and 100"));
+      return;
+    }
+    if (isNaN(exchange) || exchange <= 0) {
+      toast.error(t("settings.exchangeRateInvalid", "Exchange rate must be a valid positive number"));
+      return;
+    }
+
+    // Convert string inputs to proper numbers before saving
+    const settingsToSave: StoreSettings = {
+      ...settings,
+      taxRate: tax,
+      discountRate: discount,
+      exchangeRate: exchange,
+    };
+
+    saveSettings(settingsToSave);
+    setSettings(settingsToSave); // update local state with normalized values
     toast.success(t("settings.saveSuccess", "Settings saved successfully!"));
   };
 
@@ -290,9 +331,8 @@ export default function SettingsPage() {
                       <Input
                         id="exchangeRate"
                         type="number"
-                        min="1"
-                        value={settings.exchangeRate}
-                        onChange={(e) => handleInputChange("exchangeRate", parseFloat(e.target.value) || 0)}
+                        value={settings.exchangeRate === undefined || settings.exchangeRate === null ? "" : settings.exchangeRate}
+                        onChange={(e) => handleInputChange("exchangeRate", e.target.value)}
                         className="rounded-lg"
                       />
                     </div>
@@ -303,10 +343,8 @@ export default function SettingsPage() {
                       <Input
                         id="taxRate"
                         type="number"
-                        min="0"
-                        max="100"
-                        value={settings.taxRate}
-                        onChange={(e) => handleInputChange("taxRate", parseFloat(e.target.value) || 0)}
+                        value={settings.taxRate === undefined || settings.taxRate === null ? "" : settings.taxRate}
+                        onChange={(e) => handleInputChange("taxRate", e.target.value)}
                         className="rounded-lg"
                       />
                     </div>
@@ -317,10 +355,8 @@ export default function SettingsPage() {
                       <Input
                         id="discountRate"
                         type="number"
-                        min="0"
-                        max="100"
-                        value={settings.discountRate}
-                        onChange={(e) => handleInputChange("discountRate", parseFloat(e.target.value) || 0)}
+                        value={settings.discountRate === undefined || settings.discountRate === null ? "" : settings.discountRate}
+                        onChange={(e) => handleInputChange("discountRate", e.target.value)}
                         className="rounded-lg"
                       />
                     </div>
@@ -454,15 +490,13 @@ export default function SettingsPage() {
                             <span>SUBTOTAL:</span>
                             <span>$8.99</span>
                           </div>
-                          {settings.taxRate > 0 && (
-                            <div className="flex justify-between">
-                              <span>TAX ({settings.taxRate}%):</span>
-                              <span>${(8.99 * settings.taxRate / 100).toFixed(2)}</span>
-                            </div>
-                          )}
+                          <div className="flex justify-between">
+                            <span>TAX (0%):</span>
+                            <span>$0.00</span>
+                          </div>
                           <div className="flex justify-between font-bold text-[10px]">
                             <span>TOTAL:</span>
-                            <span>${(8.99 * (1 + settings.taxRate / 100)).toFixed(2)}</span>
+                            <span>$8.99</span>
                           </div>
                         </div>
 
