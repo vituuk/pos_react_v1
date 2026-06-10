@@ -8,7 +8,7 @@ import {
   FieldLabel,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import PosImage from "./../../../public/img/pos.jpg"
+const PosImage = "/img/pos.jpg";
 import { useForm } from "@tanstack/react-form"
 import { z } from "zod"
 import { useAuthLogin } from "@/hooks/use-auth"
